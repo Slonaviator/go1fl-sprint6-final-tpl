@@ -16,8 +16,9 @@ import (
 // HomeHandler обрабатывает корневой эндпоинт
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	// Читаем HTML-файл
-	file, err := os.ReadFile("../index.html")
+	file, err := os.ReadFile("./index.html")
 	if err != nil {
 		log.Printf("reading error index.html: %v", err)
 		http.Error(w, "internal server error", http.StatusInternalServerError)
@@ -25,7 +26,8 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Устанавливаем заголовок и отправляем ответ
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	//w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
 	w.Write(file)
 }
 
