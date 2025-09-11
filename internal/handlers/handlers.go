@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -16,9 +15,8 @@ import (
 // HomeHandler обрабатывает корневой эндпоинт
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
-	//w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	// Читаем HTML-файл
-	file, err := os.ReadFile("./index.html")
+	file, err := os.ReadFile("./index.html") //http.ServeFile(w, r, "./index.html")
 	if err != nil {
 		log.Printf("reading error index.html: %v", err)
 		http.Error(w, "internal server error", http.StatusInternalServerError)
@@ -68,7 +66,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Формируем имя файла
-	timeFileName := time.Now().UTC().Add(3 * time.Hour).Format("2006-01-02_15-04-05") //time.Now().UTC().String()
+	timeFileName := time.Now().UTC().Add(3 * time.Hour).Format("2006-01-02_15-04-05")
 	ext := filepath.Ext(handler.Filename)
 	newFileName := fmt.Sprintf("convertedFile_%s%s", timeFileName, ext)
 
@@ -88,11 +86,11 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// Возвращаем результат
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(content))
-	json.NewEncoder(w).Encode(map[string]string{
+	/*json.NewEncoder(w).Encode(map[string]string{
 		"result":   convertedText,
 		"filename": newFileName,
-	})
+	})*/
 }

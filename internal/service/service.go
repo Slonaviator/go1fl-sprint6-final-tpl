@@ -18,10 +18,7 @@ func DetectAndProcess(s string) (string, error) {
 	if isMorseCode(s) {
 		return morse.ToText(s), nil
 	}
-	//if isText(s) {
 	return morse.ToMorse(s), nil
-	//}
-	//return s, fmt.Errorf("conversion error: %w", errors.New("incorrect data"))
 }
 
 // isMorseCode - проверяет является ли строка кодом Морзе или нет.
@@ -34,13 +31,3 @@ func isMorseCode(s string) bool {
 	}
 	return true
 }
-
-/*// isText - проверяет строку на наличие не буквенных символов.
-func isText(s string) bool {
-	for _, ch := range s {
-		if unicode.IsLetter(ch) {
-			return true
-		}
-	}
-	return false
-}*/
